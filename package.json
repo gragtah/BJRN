@@ -1,6 +1,6 @@
 {
   "name": "BJRN",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -10,8 +10,21 @@
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.13.1",
+    "express-session": "~1.12.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "tinderjs" : "1.0.6",
+    "tinderbot": "*",
+    "request" : "2.34.0",
+    "googleapis": "1.0.21",
+    "moment": "2.8.4",
+    "oauth-signature" : "*",
+    "nonce" : "*",
+    "underscore": "*",
+    "lodash": "*",
+    "querystring" : "*",
+     "node-wit": "*"
+
   }
 }

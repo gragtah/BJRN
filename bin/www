@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('BJRN:server');
 var http = require('http');
+// var yelp = require('../yelp')
 
 /**
  * Get port from environment and store in Express.
@@ -25,6 +26,16 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
+// websocket init
+// var io = require('../websocket')(server);
+// crawler init
+// var crawler = require('../twittercrawler')(io);
+
+
+// var launcher = require('../cluster_launch');
+// launcher();
+
+console.log("started server...");
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
