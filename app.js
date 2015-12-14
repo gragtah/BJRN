@@ -12,7 +12,7 @@ var tinder = require('./routes/tinder');
 var yelp = require('./routes/yelp');
 var nlp = require('./routes/nlp');
 
-// var tinderbot = require('tinderbot');//(io);
+// var tinderbot = require('tinderbot');
 
 var app = express();
 var webSession;
@@ -44,8 +44,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
-// error handlers
 
 // development error handler
 // will print stacktrace

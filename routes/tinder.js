@@ -31,7 +31,6 @@ router.get('/', function(req, res, next) {
   
   	console.log("auth is true, but need to fetch access_token");
   	var code = req.query.code;
-  	// console.log(code);
 
   var oauthAccessTokenUrl  = 'https://graph.facebook.com/v2.3/oauth/access_token?client_id=' + app_id + '&redirect_uri=' + redirect_uri + '&client_secret='+ app_secret + '&code='+ code;
   console.log("oauthAccessTokenUrl: " + oauthAccessTokenUrl);
@@ -76,7 +75,6 @@ router.get('/', function(req, res, next) {
   if(auth && access_token != '') {
  
  	console.log("now going to tinder client code");
-
  	// https://www.facebook.com/connect/login_success.html#access_token=CAAGm0PX4ZCpsBAC2GVMlM7hwI0Rt8JEGsBpk9BX6ZAAEYRKJGtFKnuKM1PEqGgsmvyHsLICtlUHlWJItTDdOd6grZCyMUVcrauJZCd4gNrr3nl2QjZB0ZCOH2yjGYccZClSGFVAfkr7kCfViR1hIc9AeAQZCZBxi5ZAhhYUFMKkFJeFruxTBD7N68JNGIT0nCI5D3pIZBuqyVGFeEf0fWNh4QHkBK805HYRt0kZD&expires_in=4801
  	    // With Facebook access token and user id, authorize our client 
         // to start using Tinder API
@@ -124,14 +122,10 @@ router.get('/', function(req, res, next) {
 
               res.send('this is done ');
 
-
-
           }); //, _this.mainLoopInterval);  
 
 	}
-
 });
-
 
 
 router.get('/login', function(req, res){

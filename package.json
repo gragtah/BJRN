@@ -25,6 +25,5 @@
     "lodash": "*",
     "querystring" : "*",
      "node-wit": "*"
-
   }
 }

@@ -68,8 +68,9 @@ yelp.yelpSearch = function(set_parameters, callback) {
     return callback(error, response, body);
   });
 
-}/*,
+}
 
+/*,
 suggestDateVenue: function(set_parameters, webSession) {
 
     if(webSession.restaurants) {
@@ -108,6 +109,5 @@ suggestDateVenue: function(set_parameters, webSession) {
   }*/
 
 // };
-
 
 module.exports = yelp;
