@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('BJRN:server');
 var http = require('http');
-// var yelp = require('../yelp')
 
 /**
  * Get port from environment and store in Express.

@@ -6,7 +6,6 @@ router.get('/', function(req, res, next) {
   res.send('our nlp routes');
 });
 
-
 router.get('/infer', function(req, res, next) {
   // res.send('our nlp routes');
 
@@ -15,10 +14,8 @@ router.get('/infer', function(req, res, next) {
     nlp.infer(incoming_chat_message, function(error, wit_res){
 
     	// res.send(wit_res);
-
    	   res.setHeader('Content-Type', 'application/json');
    		res.send(JSON.stringify(wit_res, null, 3));
-
     });
 
 });

@@ -1,6 +1,7 @@
 // OR JUST LAUNCH THIS ENTIRE THING IN A LOOP, no cluster!!!  <--------
 
-/*var cluster = require('cluster');
+/*
+var cluster = require('cluster');
 var http = require('http');
 var numCPUs = require('os').cpus().length;
 

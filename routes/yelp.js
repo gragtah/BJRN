@@ -8,7 +8,6 @@ router.get('/', function(req, res, next) {
   res.send('this is yelp api');
 });
 
-
 router.get('/suggest', function(request, response) {
   webSession = request.session;
 
@@ -24,7 +23,7 @@ router.get('/suggest', function(request, response) {
 
     // console.log(webSession.i + " and " + webSession.currentRestaurant.name + " " + webSession.currentRestaurant.address)
     response.send(webSession.currentRestaurant);
-
+    
   } else {
     webSession.i = 0;
     // 'restaurants,bars'

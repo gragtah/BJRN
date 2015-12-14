@@ -18,7 +18,6 @@ var app = express(),
   authed = false;
 
 // Response for localhost:3000/
-// app.get('/', function(req, res) {
 var gCal = {};
 gCal.getFreeTimes = function(callback) {
 
@@ -37,59 +36,21 @@ gCal.getFreeTimes = function(callback) {
     var nextWeek = moment().add(7, 'd');
     nextWeek = nextWeek.toISOString();
     var resource = {
-      timeMin: today;
-      timeMax: nextWeek;
+      timeMin: today,
+      timeMax: nextWeek,
       items:[
       {
-        id: calendarId;
+        id: calendarId
       }
       ]
     };
     var response = Calendar.Freebusy.query(resource);
     return response.calendars[calendarId];
-    // calendar.events.list({
-    //   calendarId: googleConfig.calendarId,
-    //   timeMin: today,
-    //   timeMax: nextWeek,
-    //   auth: oAuthClient
-    // }, function(err, events) {
-    //   if(err) {
-    //     console.log('Error fetching events');
-    //     console.log(err);
-    //   } else {
-    //     console.log('Fetched events');
-    //     console.log(events);
-
-    //   }
-    // });
-      // Format today's date
-      // var today = moment().format('YYYY-MM-DD') + 'T';
-
-      // // Call google to fetch events for today on our calendar
-      // calendar.events.list({
-      //   calendarId: googleConfig.calendarId,
-      //   maxResults: 20,
-      //   timeMin: today + '00:00:00.000Z',
-      //   timeMax: today + '23:59:59.000Z',
-      //   auth: oAuthClient
-      // }, function(err, events) {
-      //   if(err) {
-      //     console.log('Error fetching events');
-      //     console.log(err);
-      //   } else {
-
-      //     // Send our JSON response back to the browser
-      //     console.log('Successfully fetched events');
-      //     console.log(events);
-      //     res.send(events);
-      //   }
-      // });
 
   }
 }
 
 // Return point for oAuth flow, should match googleConfig.redirectURL
-// app.get('/auth', function(req, res) {
 gCal.auth = function(callback){
 
     var code = req.param('code');
@@ -113,11 +74,12 @@ gCal.auth = function(callback){
         }
       });
     } 
+};
+
+
+var server = app.listen(3000, function() {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log('Listening at http://%s:%s', host, port);
 });
-
-// var server = app.listen(3000, function() {
-//   var host = server.address().address;
-//   var port = server.address().port;
-
-//   console.log('Listening at http://%s:%s', host, port);
-// });

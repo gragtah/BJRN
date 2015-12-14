@@ -1,3 +1,4 @@
+
 /* require the modules needed */
 var oauthSignature = require('oauth-signature');
 var n = require('nonce')();
@@ -18,9 +19,11 @@ process.env['tokenSecret'] = '4nDZB92PFZdbe7Iso_mkfAq3MC8';
 
 var restaurants = [];
 
+var categories = {'american': 'tradamerican', 'australian': 'australian', 'barbeque': 'bbq', 'belgian': 'belgian', 'breakfast': 'breakfast_brunch', 'brunch': 'breakfast_brunch', 'british': 'british', 'buffet': 'buffets', 'burger': 'burgers', 'burgers': 'burgers', 'coffee': 'cafes', 'chinese': 'chinese', 'fast food': 'hotdogs', 'fish and chips': 'fishnchips', 'french': 'french', 'indian': 'indpak', 'pakistani': 'pakistani', 'persian': 'persian', 'pizza': 'pizza', 'salad': 'salad', 'sandwich': 'sandwiches', 'spanish': 'spanish', 'thai': 'thai', 'vegan': 'vegan', 'vegetarian': 'vegetarian', 'no meat': 'vegetarian'};
+
 var yelp = {};
 // function yelp(set_parameters, callback) {
-yelp.yelpSearch = function(set_parameters, callback) {
+yelp.yelpSearch = function(parameter_string, callback) {
   /* The type of request */
   var httpMethod = 'GET';
 
@@ -29,7 +32,7 @@ yelp.yelpSearch = function(set_parameters, callback) {
 
   /* We can setup default parameters here */
   var default_parameters = {
-    location: '10027',
+    // location: '10027',
     sort: '2'
   };
 
@@ -42,6 +45,26 @@ yelp.yelpSearch = function(set_parameters, callback) {
     oauth_signature_method : 'HMAC-SHA1',
     oauth_version : '1.0'
   };
+
+  var terms = parameter_string.search_terms.split(" ");
+
+  if (parameter_string.search_terms.indexOf("not") > -1) {
+    var term_str = terms.toString();
+    var set_parameters = {
+      location: parameter_string.location,
+      category_filter: term_str
+    }
+  } else {
+    var newdict = categories;
+    terms.forEach(function (term) {
+      newdict.delete(term);
+    });
+    var term_str = newdict.toString();
+    var set_parameters = {
+      location: parameter_string.location,
+      category_filter: term_str
+    }
+  }
 
   /* We combine all the parameters in order of importance */ 
   var parameters = _.assign(default_parameters, set_parameters, required_parameters);
@@ -68,8 +91,9 @@ yelp.yelpSearch = function(set_parameters, callback) {
     return callback(error, response, body);
   });
 
-}/*,
+}
 
+/*,
 suggestDateVenue: function(set_parameters, webSession) {
 
     if(webSession.restaurants) {
@@ -108,6 +132,5 @@ suggestDateVenue: function(set_parameters, webSession) {
   }*/
 
 // };
-
 
 module.exports = yelp;

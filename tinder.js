@@ -14,8 +14,6 @@ tinder.demo = function() { //set_parameters, callback) {
 	  if (err) console.log("Error: ", err);
 	  console.log(JSON.stringify(res, null, " "));
 	});*/
-
-
 }
 
 
