@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var tinder = require('./routes/tinder');
 var yelp = require('./routes/yelp');
 var nlp = require('./routes/nlp');
+var uber=require('./routes/uber');
 
 // var tinderbot = require('tinderbot');
 
@@ -39,6 +40,7 @@ app.use('/users', users);
 app.use('/tinder', tinder);
 app.use('/yelp', yelp);
 app.use('/nlp', nlp);
+app.use('/uber',uber)
 
 
 // catch 404 and forward to error handler
