@@ -46,6 +46,9 @@ yelp.yelpSearch = function(parameter_string, callback) {
     oauth_version : '1.0'
   };
 
+  var parameter_string = (parameter_string === undefined) ? "" : parameter_string;
+    console.log(parameter_string);
+    
   var terms = parameter_string.search_terms.split(" ");
 
   if (parameter_string.search_terms.indexOf("not") > -1) {
@@ -69,6 +72,7 @@ yelp.yelpSearch = function(parameter_string, callback) {
     }
   }
 
+  // var set_parameters = {}
   /* We combine all the parameters in order of importance */ 
   var parameters = _.assign(default_parameters, set_parameters, required_parameters);
 
