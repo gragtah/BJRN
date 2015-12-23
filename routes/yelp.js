@@ -10,7 +10,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/suggest', function(request, response) {
   webSession = request.session;
-
+  var search_terms = request.query.search_terms;
+  var location = request.query.location;
+  console.log(webSession.restaurants);
   // console.log(request.query.venueType);
   // response.send(yelp.suggestDateVenue({category_filter:'restaurants'}, webSession));
   if(webSession.restaurants) {    
@@ -27,10 +29,18 @@ router.get('/suggest', function(request, response) {
   } else {
     webSession.i = 0;
     // 'restaurants,bars'
-    yelp.yelpSearch({category_filter: 'restaurants'}, function(error, res, body){
+      console.log("calling yelp api=======");
+
+    yelp.yelpSearch({
+        search_terms: search_terms,
+        location: location/*,
+        category_filter: 'restaurants'*/
+      }, function(error, res, body){
       var parsedbody = JSON.parse(body);
-      // console.log(parsedbody);
-      // console.log(parsedbody.businesses.length);
+
+      console.log(parsedbody);
+      console.log(parsedbody.businesses.length);
+      
       parsedbody.businesses.forEach(function(place) {
         restaurants.push({
             'name': place.name,
