@@ -43,7 +43,7 @@ gCal.getFreeTimes = function(callback) {
       auth: oAuthClient
     }, function (err, events) {
       if(err) {
-        console.log("error fetching events");
+          console.log("error fetching events");
         console.log(err);
       } else {
         console.log("Successfully fetched events");
@@ -84,6 +84,37 @@ function findSlotsAvailable(events, currentDay) {
   };
   return slots;
   // return flag;
+}
+
+gCal.insertEvent = function(location, startTime, endTime, callback) {
+  var date_event = {
+    'summary': 'Tinder Date',
+    'location': 'get it from yelp',
+    'start': {
+      'dateTime': startTime, //get from list of available times, selected from user
+      'timeZone': 'America/New_York',
+    },
+    'end': {
+      'dateTime': endTime, //same as above (slot time is say 3 hours??)
+      'timeZone': 'America/New_York',
+    }
+  };
+  console.log("AUTH CLIENT!!!!");
+  console.log(oAuthClient);
+  // var googleCalendar = new gcal.googleCalendar();
+  calendar.events.insert({
+    auth: oAuthClient,
+    calendarId: googleConfig.calendarId,
+    resource: date_event,
+  }, function(err, event) {
+    if (err) {
+      console.log('There was an error contacting the Calendar service: ');
+      console.log(err);
+      return; 
+      }
+    console.log('Event created: %s', event.htmlLink);
+    return event;
+  });
 }
 
 // Return point for oAuth flow, should match googleConfig.redirectURL
