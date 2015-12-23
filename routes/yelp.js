@@ -35,7 +35,7 @@ router.get('/suggest', function(request, response) {
         search_terms: search_terms,
         location: location/*,
         category_filter: 'restaurants'*/
-      }, function(error, res, body){
+      }, function (error, res, body){
       var parsedbody = JSON.parse(body);
 
       // console.log(parsedbody);

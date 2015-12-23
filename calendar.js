@@ -53,14 +53,16 @@ gCal.getFreeTimes = function(callback) {
           console.log([events.items[i].start.dateTime, events.items[i].end.dateTime]);
         };
 
+        var slotStartTimes = [];
+
         for(var i = today.slice(8, 10); i <= nextWeek.slice(8, 10); i++) {
           console.log("Day " + i);
-          var slotStartTimes = findSlotsAvailable(events, i);
+          slotStartTimes.push(findSlotsAvailable(events, i));
           if(slotStartTimes.length == 0) {
             slotStartTimes.push(17);
           }
-          return slotStartTimes;
         }
+        return callback(slotStartTimes);
       }
     });
   }

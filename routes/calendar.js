@@ -9,9 +9,11 @@ router.get('/', function(req, res, next) {
 router.get('/calendar', function (req, res) {
 	webSession = req.session;
 	if(webSession.authed) {
-		// gCal.getFreeTimes()
+		gCal.getFreeTimes(function (error, response, body) {
+      res.send(response);
+    });
 	} else {
-		calendar.auth();
+		gCal.auth();
 	}
 });
 
@@ -22,7 +24,7 @@ router.post('/calendar', function (req, res) {
 	if(webSession.authed) {
 		// gCal.insertEvent()
 	} else {
-		calendar.auth();
+		gCal.auth();
 	}
 });
 
