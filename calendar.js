@@ -86,10 +86,10 @@ function findSlotsAvailable(events, currentDay) {
   // return flag;
 }
 
-gCal.insertEvent = function(location, startTime, endTime, callback) {
+gCal.insertEvent = function(dateName, location, startTime, endTime, callback) { // starttime and endtime are iso strings
   var date_event = {
-    'summary': 'Tinder Date',
-    'location': 'get it from yelp',
+    'summary': 'Tinder Date: ' + dateName,
+    'location': location,
     'start': {
       'dateTime': startTime, //get from list of available times, selected from user
       'timeZone': 'America/New_York',
@@ -138,8 +138,10 @@ gCal.auth = function(callback){
           authed = true;
           console.log("redirecting to /calendar");
           res.redirect('/calendar');
+          // parametrize this to pass in where to redirect
         }
       });
     } 
 };
 
+module.exports = gCal;
