@@ -47,28 +47,52 @@ yelp.yelpSearch = function(parameter_string, callback) {
   };
 
   var parameter_string = (parameter_string === undefined) ? "" : parameter_string;
-    console.log(parameter_string);
+    // console.log(parameter_string);
     
   var terms = parameter_string.search_terms.split(" ");
+  // console.log(parameter_string.search_terms.indexOf("not"));
 
-  if (parameter_string.search_terms.indexOf("not") > -1) {
+  if (parameter_string.search_terms.indexOf("not") == -1) {
     var term_str = "";
     terms.forEach(function (term) {
-      term_str += categories[term];
+      term_str += categories[term] + ",";
+      // console.log(categories[term]);
     })
+    // console.log(term_str.slice(0, -1));
+    var filter = JSON.stringify(term_str.slice(0, -1));
+    // console.log(filter);
+    var stripped_filter = filter.replace(/\"/g, "");
+    // console.log(filter);
+    if(stripped_filter == "undefined") {
+      stripped_filter = 'restaurants';
+    }
     var set_parameters = {
       location: parameter_string.location,
-      category_filter: term_str
+      category_filter: stripped_filter
     }
   } else {
     var newdict = categories;
+    console.log("\n\n====" + terms);
     terms.forEach(function (term) {
-      delete newdict[term];
+      if(term != 'not') {
+        console.log(newdict[term]);
+        delete newdict[term];
+      }
     });
-    var term_str = newdict.toString();
+    var term_str;
+    newdict.forEach(function (term) {
+      term_str += newdict[term] + ",";
+    });
+    console.log (newdict + " and term_str: " + term_str);
+    var filter = JSON.stringify(term_str.slice(0, -1));
+    var stripped_filter = filter.replace(/\"/g, "");
+    if(stripped_filter == "undefined") {
+      stripped_filter = 'restaurants';
+    }
+    console.log(stripped_filter);
     var set_parameters = {
       location: parameter_string.location,
-      category_filter: term_str
+      category_filter: stripped_filter
     }
   }
 
@@ -89,9 +113,11 @@ yelp.yelpSearch = function(parameter_string, callback) {
 
   /* Then we turn the paramters object, to a query string */
   var paramURL = qs.stringify(parameters);
+  console.log(paramURL);
 
   /* Add the query string to the url */
   var apiURL = url+'?'+paramURL;
+  console.log(apiURL);
 
   /* Then we use request to send make the API Request */
   request(apiURL, function(error, response, body){

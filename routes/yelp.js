@@ -12,22 +12,22 @@ router.get('/suggest', function(request, response) {
   webSession = request.session;
   var search_terms = request.query.search_terms;
   var location = request.query.location;
-  console.log(webSession.restaurants);
+  // console.log(webSession.restaurants);
   // console.log(request.query.venueType);
   // response.send(yelp.suggestDateVenue({category_filter:'restaurants'}, webSession));
-  if(webSession.restaurants) {    
-    if (webSession.i + 1 >= webSession.restaurants.length) {
-      webSession.i = 0;
-    } else {
-      webSession.i += 1;
-    }
-    webSession.currentRestaurant = webSession.restaurants[webSession.i];
+  // if(webSession.restaurants) {    
+  //   if (webSession.i + 1 >= webSession.restaurants.length) {
+  //     webSession.i = 0;
+  //   } else {
+  //     webSession.i += 1;
+  //   }
+  //   webSession.currentRestaurant = webSession.restaurants[webSession.i];
 
-    // console.log(webSession.i + " and " + webSession.currentRestaurant.name + " " + webSession.currentRestaurant.address)
-    response.send(webSession.currentRestaurant);
+  //   // console.log(webSession.i + " and " + webSession.currentRestaurant.name + " " + webSession.currentRestaurant.address)
+  //   response.send(webSession.currentRestaurant);
     
-  } else {
-    webSession.i = 0;
+  // } else {
+    // webSession.i = 0;
     // 'restaurants,bars'
       console.log("calling yelp api=======");
 
@@ -38,9 +38,9 @@ router.get('/suggest', function(request, response) {
       }, function(error, res, body){
       var parsedbody = JSON.parse(body);
 
-      console.log(parsedbody);
-      console.log(parsedbody.businesses.length);
-      
+      // console.log(parsedbody);
+      // console.log(parsedbody.businesses.length);
+      restaurants = [];
       parsedbody.businesses.forEach(function(place) {
         restaurants.push({
             'name': place.name,
@@ -48,11 +48,12 @@ router.get('/suggest', function(request, response) {
           }
         );
       });
-      webSession.restaurants = restaurants;
-      webSession.currentRestaurant = webSession.restaurants[webSession.i];
-      response.send(webSession.currentRestaurant);
+      // webSession.restaurants = restaurants;
+      // webSession.currentRestaurant = webSession.restaurants[webSession.i];
+      console.log(restaurants);
+      response.send(restaurants);
     });
-  }
+  // }
 });
 
 module.exports = router;
