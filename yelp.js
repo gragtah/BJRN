@@ -49,7 +49,10 @@ yelp.yelpSearch = function(parameter_string, callback) {
   var terms = parameter_string.search_terms.split(" ");
 
   if (parameter_string.search_terms.indexOf("not") > -1) {
-    var term_str = terms.toString();
+    var term_str = "";
+    terms.forEach(function (term) {
+      term_str += categories[term];
+    })
     var set_parameters = {
       location: parameter_string.location,
       category_filter: term_str
@@ -57,7 +60,7 @@ yelp.yelpSearch = function(parameter_string, callback) {
   } else {
     var newdict = categories;
     terms.forEach(function (term) {
-      newdict.delete(term);
+      delete newdict[term];
     });
     var term_str = newdict.toString();
     var set_parameters = {
