@@ -6,6 +6,9 @@ router.get('/', function(req, res, next) {
   res.render('index.html', { title: 'BJRN' });
 });
 
+router.get('/index', function(req, res, next) {
+  res.render('index.html', { title: 'BJRN' });
+});
 
 router.get('/dashboard', function(req, res, next) {
   res.render('dashboard.html', { title: 'BJRN' });
