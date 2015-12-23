@@ -27,9 +27,6 @@ var sendMessageParams = {
               QueueUrl:'https://sqs.us-east-1.amazonaws.com/689543374478/uberqueue' ,
               MessageBody: JSON.stringify(uberData)
           };
-          sqs1.sendMessage(sendMessageParams, function (err, data) {
-            if (err) console.log(err);
-          });
 
 
 
@@ -50,26 +47,49 @@ router.get('/uber', function(req,res,next){
   res.redirect('/uber');
 })
 
+router.get('/schedule',function(req,res,next){
+    var homeCoordinates= req.query.homeX + ',' + req.query.homeY; //  '40.80895639999999, -73.96243270000002';//dummy data
+    var OtherCoordinates= req.query.otherX + ',' + req.query.otherY ; //40.758895, -73.98513100000002';//dummy data
+    var uberData = {
+      "accessToken": accessToken,
+      "homeCoordinates":homeCoordinates,
+      "OtherCoordinates":OtherCoordinates 
+    }
+
+    sendMessageParams = {
+              QueueUrl:'https://sqs.us-east-1.amazonaws.com/689543374478/uberqueue' ,
+              MessageBody: JSON.stringify(uberData)
+          };
+
+
+      sqs1.sendMessage(sendMessageParams, function (err, data) {
+            if (err) console.log(err);
+          });
+});
+
+
 router.get('/request',function(req,res,next){
-	console.log("stuck here")
+	console.log("scheduling uber request for later");
+
+
+
+
 	request({
 		url:requrl,
 		method:'POST',
 		form: {
 		auth:uberClient,
-        start_latitude:'40.759011',
+    start_latitude:'40.759011',
 		start_longitude:'-73.984472',
 		end_latitude:'40.706086',
 		end_longitude:'-73.996864'
-    	}
-		
-	},function(err,response,body){
+    	}} ,function(err,response,body){
 		if (!err && response.statusCode == 200) {
-        console.log(body); // Show the HTML for the Modulus homepage.
+        console.log(body); // Show the HTML for the  homepage.
 	}
 
-})
-})
+});
+});
 
 // router.get('/uber', function(req,res,next){
   
