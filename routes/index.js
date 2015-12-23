@@ -19,7 +19,7 @@ router.get('/scheduled', function(req, res, next) {
 });
 
 router.get('/datechat', function(req, res, next) {
-  res.render('datechat.html', { title: 'BJRN' });
+  res.render('dateChat.html', { title: 'BJRN' });
 });
 
 router.get('/settings', function(req, res, next) {

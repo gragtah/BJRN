@@ -20,6 +20,9 @@
     <!-- Custom styles for this template -->
     <link href="stylesheets/cover.css" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -48,41 +51,46 @@
 
           <div class="inner cover">
             <h1 class="cover-heading">Cloud 9</h1>
-            <p class="lead">An end-to-end dating application which helps sets up potential dates with matches through Tinder, uses NLP against the chat text to determine the match’s interests, preferences, time availability, etc. and helps schedule a date night at a great venue at a perfect time by leveraging Yelp and Google calendar APIs, and calls an Uber for you when it’s time to leave for the date.</p>
-            <p class="lead">
+            <p class="lead">An intelligent dating application which helps sets up dates with matches through Tinder etc., uses NLP against the chat text to determine your match’s interests, preferences, time availability, and a personal summary, etc. and recommends and schedules a date night for you at a great venue at a perfect time by leveraging Yelp + Google calendar APIs. Finally, we schedule booking an Uber for you when it’s time to leave for the date.</p>
+           <!--  <p class="lead">
               <a href="dashboard" class="btn btn-lg btn-default">Get Started!</a>
-            </p>
+            </p> -->
           </div>
-
 
 
           <div class="overlay-block">
         
             <h4 style="text-align:center;margin-bottom:20px">
-              Go to the following link then copy the url and paste it in the box below so we can get your token and expiration.
+              Click the following link, copy your authentication url and paste it in the box below to start playing.
             </h4>
-            <a target="_blank" href="https://www.facebook.com/dialog/oauth?client_id=464891386855067&amp;redirect_uri=https://www.facebook.com/connect/login_success.html&amp;scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&amp;response_type=token">
+
+            <!-- <a target="_blank" href="https://www.facebook.com/dialog/oauth?client_id=323050247819200&amp;redirect_uri=https://www.facebook.com/connect/login_success.html&amp;scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&amp;response_type=token"> -->
+            <a target="_blank" href="https://www.facebook.com/dialog/oauth?client_id=323050247819200&response_type=code&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=public_profile,email,public_profile,user_about_me,user_birthday,user_education_history,user_friends,user_likes,user_location,user_photos,user_relationship_details&response_type=token">
             <div class="code">https://www.facebook.com/connect/login_success.html#access_token={<strong>ACCESS TOKEN HERE</strong>}&amp;expires_in={<strong>TOKEN EXPIRATION</strong>}
             </div>
             </a>
             <div ng-show="loginError.length > 0" class="login-error ng-binding ng-hide"></div>
             <!-- <input placeholder="Paste the URL here" class="fb-input ng-pristine ng-untouched ng-valid" ng-model="fbUrl"> -->
             
-            <input id="field" type="text" autofocus="autofocus" placeholder="Paste the URL here!">
+            <input id="field" type="text" autofocus="autofocus" placeholder="Paste the URL here!" style="color: black;">
 
-            <div ng-click="login()" style="width:100px;margin-top:15px;" class="btn btn-default center-block facebook-btn">
+            <div id="submit" ng-click="login()" style="width:100px;margin-top:15px;" class="btn btn-default center-block facebook-btn">
               Login
             </div>
-            <h6 style="text-align:center;margin-bottom:0px">
+            <!-- <h6 style="text-align:center;margin-bottom:0px">
               Don't worry, we don't collect any of this data.
-            </h6>
+            </h6> -->
         </div>
 
         <script>
-
-          var url = $scope.fbUrl;
-          $scope.loginError = "" ;
-          if($scope.fbUrl) {
+          $('#submit').click(function() {
+/*            var newURL = document.querySelector('#field').value
+            if (newURL.trim()!== "") {
+              window.location = "/fetch?url=" + newURL;
+            }*/
+        // alert("hi from inside");
+        var url = document.querySelector('#field').value
+          if(url != undefined && url.trim()!== "") {
             var arr = url.split("=");
 
             if(arr[1]) {
@@ -92,6 +100,11 @@
                 var accessToken = subArr[0];
                 var expiration = arr[2];
                 if(accessToken && expiration) {
+
+                  // alert("going to /tinder/login?access_token=" + accessToken + '&expires_in=' + expiration);
+                  window.location = "/tinder/login?access_token=" + accessToken + '&expires_in=' + expiration ;
+/*
+                
                   Facebook.login(function (response) {
                     console.log(response);
                     var exp = new Date(Date.now() + (expiration*1000));
@@ -100,13 +113,16 @@
                     $scope.loginError = "";
                     window.location.assign("/swipe");
 
-                  })
+                  })*/
                   
                 }
-                else {
+               /* else {
                   $scope.loginError = "We couldn't parse that text, try again please" ;
-                }
+                }*/
               }
+            }
+          }
+          });
 
         </script>
 
@@ -132,8 +148,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- // <script src="javascripts/ie10-viewport-bug-workaround.js"></script> -->
   

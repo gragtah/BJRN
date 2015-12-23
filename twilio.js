@@ -6,8 +6,8 @@ var fs = require('fs');
 
 client.messages.create({
     body: "whats up, twilio testing",
-    to: "+13478193711",
-    from: "+17328750945"
+    to: toPhoneNum,
+    from: twilioPhoneNum
 }, function(err, message) {
     console.log(message.sid);
 });

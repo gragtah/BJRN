@@ -6,13 +6,6 @@ var request=require('request');
 var requrl='https://sandbox-api.uber.com/v1/sandbox/requests/';
 //retreived access token
 var accessToken='Akd2JUaZG81UPlzbUwLJn6SxbD1NIx'; //retrieved from uber api
-var homeCoordinates='40.80895639999999, -73.96243270000002';//dummy data
-var OtherCoordinates='40.758895, -73.98513100000002';//dummy data
-var uberData = {
-	"accessToken": accessToken,
-	"homeCoordinates":homeCoordinates,
-	"OtherCoordinates":OtherCoordinates 
-}
 
 var aws = require('aws-sdk');
 var sqs1 = new aws.SQS({
@@ -79,10 +72,10 @@ router.get('/request',function(req,res,next){
 		method:'POST',
 		form: {
 		auth:uberClient,
-    start_latitude:'40.759011',
-		start_longitude:'-73.984472',
-		end_latitude:'40.706086',
-		end_longitude:'-73.996864'
+    start_latitude:req.query.homeX,
+		start_longitude:req.query.homeY,
+		end_latitude:req.query.otherX,
+		end_longitude:req.query.otherY
     	}} ,function(err,response,body){
 		if (!err && response.statusCode == 200) {
         console.log(body); // Show the HTML for the  homepage.

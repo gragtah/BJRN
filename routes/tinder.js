@@ -15,6 +15,10 @@ var auth = false; //change how handled
 var redirect_uri = 'http://localhost:3000/tinder?ts='+ Date.now();
 var access_token = '';
 var user_id = '';
+var expires_in = '';
+
+// ADD ALL THIS TO SESSION? access_token etc!
+
 
 router.get('/', function(req, res, next) {
 
@@ -23,17 +27,17 @@ router.get('/', function(req, res, next) {
 
   if (!auth) {
   	// auth = true;  // set this somewhere else in the flow to handle better!
-  	console.log("redirecting to login");
+  	console.log("\n\n==========================redirecting to login\n\n");
   	res.redirect('/tinder/login');
   	    // res.redirect('https://www.facebook.com/dialog/oauth?client_id=' + app_id + '&response_type=code&redirect_uri=' + redirect_uri);
 
   } else if (access_token == ''){
   
-  	console.log("auth is true, but need to fetch access_token");
+  	console.log("\n\n======================auth is true, but need to fetch access_token\n\n");
   	var code = req.query.code;
 
   var oauthAccessTokenUrl  = 'https://graph.facebook.com/v2.3/oauth/access_token?client_id=' + app_id + '&redirect_uri=' + redirect_uri + '&client_secret='+ app_secret + '&code='+ code;
-  console.log("oauthAccessTokenUrl: " + oauthAccessTokenUrl);
+  console.log("\n\noauthAccessTokenUrl: " + oauthAccessTokenUrl);
 
   request({
     url: oauthAccessTokenUrl,
@@ -43,8 +47,8 @@ router.get('/', function(req, res, next) {
 
   	access_token = (JSON.parse(body1)).access_token;
 
-  	fBDebugTokenUrl = 'https://graph.facebook.com/debug_token?input_token=' + access_token + '&access_token=' + app_id + '|' + 'ae51ed7c0cca95e212556e06e072d25c'
-  	console.log(fBDebugTokenUrl);
+  /*	var fBDebugTokenUrl = 'https://graph.facebook.com/debug_token?input_token=' + access_token + '&access_token=' + app_id + '|' + 'ae51ed7c0cca95e212556e06e072d25c'
+  	console.log(fBDebugTokenUrl + "\n");
 
    request({
       // url: 'https://graph.facebook.com/debug_token?input_token=' + access_token + '&access_token=' + FBClientId + '|' + _this.FBClientSecret,
@@ -62,28 +66,29 @@ router.get('/', function(req, res, next) {
         	console.log(body);
           throw new "Failed to get user id.";
         }
-		console.log(body.data.user_id + " is the user id\n");
-		user_id = body.data.user_id;
+    		console.log(body.data.user_id + " is the user id\n");
+    		user_id = body.data.user_id;
 
-	    res.redirect('/tinder/');
+	      res.redirect('/tinder/');
 	    }
-	  });
+	  });*/
+
 	});
   } 
 
 
-  if(auth && access_token != '') {
+  if(auth == true && access_token != '' && user_id != '') {
  
  	console.log("now going to tinder client code");
  	// https://www.facebook.com/connect/login_success.html#access_token=CAAGm0PX4ZCpsBAC2GVMlM7hwI0Rt8JEGsBpk9BX6ZAAEYRKJGtFKnuKM1PEqGgsmvyHsLICtlUHlWJItTDdOd6grZCyMUVcrauJZCd4gNrr3nl2QjZB0ZCOH2yjGYccZClSGFVAfkr7kCfViR1hIc9AeAQZCZBxi5ZAhhYUFMKkFJeFruxTBD7N68JNGIT0nCI5D3pIZBuqyVGFeEf0fWNh4QHkBK805HYRt0kZD&expires_in=4801
  	    // With Facebook access token and user id, authorize our client 
         // to start using Tinder API
 
-        // client.authorize(access_token, user_id, function(){
-        client.authorize("CAAGm0PX4ZCpsBAC2GVMlM7hwI0Rt8JEGsBpk9BX6ZAAEYRKJGtFKnuKM1PEqGgsmvyHsLICtlUHlWJItTDdOd6grZCyMUVcrauJZCd4gNrr3nl2QjZB0ZCOH2yjGYccZClSGFVAfkr7kCfViR1hIc9AeAQZCZBxi5ZAhhYUFMKkFJeFruxTBD7N68JNGIT0nCI5D3pIZBuqyVGFeEf0fWNh4QHkBK805HYRt0kZD", 
-        				"515006233", function(){
+        client.authorize(access_token, user_id, function(){
+        // client.authorize("CAAGm0PX4ZCpsBAC2GVMlM7hwI0Rt8JEGsBpk9BX6ZAAEYRKJGtFKnuKM1PEqGgsmvyHsLICtlUHlWJItTDdOd6grZCyMUVcrauJZCd4gNrr3nl2QjZB0ZCOH2yjGYccZClSGFVAfkr7kCfViR1hIc9AeAQZCZBxi5ZAhhYUFMKkFJeFruxTBD7N68JNGIT0nCI5D3pIZBuqyVGFeEf0fWNh4QHkBK805HYRt0kZD", 
+        				// "515006233", function(){
 
-        	console.log("authorized! \n");
+        	console.log("\n\n============authorized! \n");
         	  client.getRecommendations(10, function(error, data){
         	  	console.log(data.results);
 			    // _.chain(data.results)
@@ -93,7 +98,7 @@ router.get('/', function(req, res, next) {
 			        //   if (data.matched) {
 			        //     client.sendMessage(
 			        //       id,
-			        //       "Hey, how's it going?"      // leaving room for actual convo now
+			        //       "Hey, how's it going?"      // open up to manual convo now
 			        //     );
 			        //   }
 			        // });
@@ -120,7 +125,8 @@ router.get('/', function(req, res, next) {
               
             // }
 
-              res.send('this is done ');
+              // res.send('this is done ');
+              res.render('dashboard.html', { title: 'BJRN' });
 
           }); //, _this.mainLoopInterval);  
 
@@ -128,12 +134,96 @@ router.get('/', function(req, res, next) {
 });
 
 
+// from tindr.online
+// https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token
+// which takes me to
+// https://www.facebook.com/connect/login_success.html#access_token=CAAGm0PX4ZCpsBAI0LB5Fay6sH1PmFRnZBCfu3FNIfYfib07sDyJee66JXBf1SkkVB8vKL1xZAhD5Yz7569cd9q6S7EZC6NHmj9vrzyQ25YZAr6Sz9AoGnr1VZBRxxt2drZClpoepkeXW4JJQn43v7aZACcTIkCZA1OJuuGcM0AjB1mJQEBUZBpnYMuEwB34XVzTZBYdLA70Jmc3LuFCJsrlt6N0WKVeJR0ZASPEZD&expires_in=5834
+
 router.get('/login', function(req, res){
     // res.redirect('https://www.facebook.com/dialog/oauth?client_id=' + '323050247819200' + '&response_type=code&redirect_uri='+ redirect_uri);
 
-    redirect_uri = 'http://localhost:3000/tinder?ts='+ Date.now();
-    auth = true;
-    res.redirect('https://www.facebook.com/dialog/oauth?client_id=' + app_id + '&response_type=code&redirect_uri=' + redirect_uri);
+    if (req.query.access_token != undefined && req.query.expires_in != undefined) {
+      access_token = req.query.access_token;
+      expires_in = req.query.expires_in;
+      console.log("\n\n=======got access_token and expires_in for user\n\n" + access_token + " " + expires_in)
+   
+
+
+      var fBDebugTokenUrl = 'https://graph.facebook.com/debug_token?input_token=' + access_token + '&access_token=' + app_id + '|' + 'ae51ed7c0cca95e212556e06e072d25c'
+      console.log(fBDebugTokenUrl + "\n");
+
+   request({
+      // url: 'https://graph.facebook.com/debug_token?input_token=' + access_token + '&access_token=' + FBClientId + '|' + _this.FBClientSecret,
+      url: fBDebugTokenUrl,
+      method: 'GET'
+    }, function(err, response, body){
+      
+      if (err) {
+        throw new "Failed to get user id: " + err;
+      } else {
+          
+          console.log("\n\n========= body received from debug_token: \n " + body);
+        body = JSON.parse(body);
+        
+        if (!body.data.user_id) {
+          console.log(body);
+          throw new "Failed to get user id.";
+        }
+        console.log(body.data.user_id + " is the user id\n");
+        user_id = body.data.user_id;
+
+        //testing
+        // user_id ='515006233';
+
+
+        // res.redirect('/tinder/');
+
+          auth = true;
+
+          res.redirect('/tinder/');
+
+      }
+    });
+
+
+  }
+
+
+    // redirect_uri = 'http://localhost:3000/tinder?ts='+ Date.now();
+  
+  /*  auth = true;
+
+   res.redirect('/tinder/');*/
+
+    // console.log("\n\n============================ sending to facebook login\n\n")
+        
+
+    // res.redirect('https://www.facebook.com/dialog/oauth?client_id=' + app_id + '&response_type=code&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=public_profile,email,public_profile,user_about_me,user_birthday,user_education_history,user_friends,user_likes,user_location,user_photos,user_relationship_details&response_type=token');
+
+
+    // https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token
+
+
+/*    facebookLoginFoo(function(err, me){
+      if (err) {
+        console.log("\n\n============ in facebookLoginFoo");
+        console.log(err);
+
+      } else {
+        client.authorize(
+          me.access_token,
+          me.id,
+          function(){
+            client.getRecommendations(10, function(error, data){
+              console.log(data.results);
+            });
+          }
+        );
+      }
+    });*/
+
+
+
 });
 
 

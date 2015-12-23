@@ -7,15 +7,7 @@ var uberClient = new uber({
   redirect_uri: 'http://localhost:3000/uber',
   name: 'cloud9'
 });
-//console.log(" before authorization")
-// uberClient.authorization({ authorization_code: 'SOME AUTH CODE' }, 
-//   function (err, accessToken, refreshToken) {
-//     uberClient.user.profile(accessToken, function (err, res) {
-//       console.log("here")
-//       console.log(err);
-//       console.log(res);
-//     });
-//   });
+
 
 
 module.exports= uber;
