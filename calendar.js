@@ -55,10 +55,11 @@ gCal.getFreeTimes = function(callback) {
 
         for(var i = today.slice(8, 10); i <= nextWeek.slice(8, 10); i++) {
           console.log("Day " + i);
-          var x = findSlotsAvailable(events, i);
-          if(x == false) {
-            console.log("Full day available");
+          var slotStartTimes = findSlotsAvailable(events, i);
+          if(slotStartTimes.length == 0) {
+            slotStartTimes.push(17);
           }
+          return slotStartTimes;
         }
       }
     });
@@ -66,20 +67,23 @@ gCal.getFreeTimes = function(callback) {
 }
 
 function findSlotsAvailable(events, currentDay) {
-  var flag = false;
+  // var flag = false;
+  var slots = {};
   for(var i = 0; i < events.items.length; i++) {
     if(events.items[i].start.dateTime.slice(8, 10) == currentDay) {
       flag = true;
       for(var j = 6; j < 24; j++) {
         if((j + 3 <= events.items[i].start.dateTime.slice(11, 13)) || (j >= events.items[i].end.dateTime.slice(11, 13))) {
           console.log(j + "-" + (j + 3) + " available");
+          slots.push(j);
         } else {
           console.log(j + "-" + (j + 3) + " not available");
         }
       }
     }
   };
-  return flag;
+  return slots;
+  // return flag;
 }
 
 // Return point for oAuth flow, should match googleConfig.redirectURL
