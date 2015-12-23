@@ -27,6 +27,7 @@
     "querystring" : "*",
      "node-wit": "*",
      "html": "*",
-     "ejs": "*"
+     "ejs": "*",
+     "node-uber":"*"
   }
 }
