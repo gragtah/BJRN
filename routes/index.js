@@ -11,4 +11,16 @@ router.get('/dashboard', function(req, res, next) {
   res.render('dashboard.html', { title: 'BJRN' });
 });
 
+router.get('/scheduled', function(req, res, next) {
+  res.render('scheduled.html', { title: 'BJRN' });
+});
+
+router.get('/datechat', function(req, res, next) {
+  res.render('datechat.html', { title: 'BJRN' });
+});
+
+router.get('/settings', function(req, res, next) {
+  res.render('settings.html', { title: 'BJRN' });
+});
+
 module.exports = router;
