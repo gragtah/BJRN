@@ -28,6 +28,7 @@
      "node-wit": "*",
      "html": "*",
      "ejs": "*",
-     "node-uber":"*"
+     "node-uber":"*",
+     "aws-sdk":"*"
   }
 }
